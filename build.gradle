@@ -1,0 +1,54 @@
+/*
+ * proeject의 plugin dependency management를 위한 설정
+ *       - ext : build.gradle에서 사용되는 전역변수
+ */
+buildscript {
+    ext {
+        springBootVersion = '2.2.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+/*
+ * 위의 선언한 plungin dependency 적용여부를 결정
+ * apply plugin: 'eclipse' => eclipse에서 gradle을 사용하기 위해 추
+ */
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'      // spring boot의 dependency management를 위해 필수적으로 추가해야 함
+
+group 'com.springboot_gradle_vue_mysql.study'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+/*
+ * 각종 dependency library를 어떤 원격 저장소에서 받을지 결정
+ * jcenter()는 library upload 난이도 때문에 사용 증가하는 추
+ */
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+/*
+ * compile : project compile 할 때 필요한 dependency library
+ * runtime : project runtime 시 필요한 dependency library. 기본적으로 compile을 포함
+ * testCompile : project test compile 시 필요한 dependency library. 기본적으로 project의 compile된 class들과 compile dependency library를 포함
+ * testRuntime : project test runtime 시 필요한 dependency library. 기본적으로 compile, runtime, testCompile dependency를 포함
+ */
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    // hateoas : RestAPI를 사용하는 client가 server로부터 어떠한 요청을 할 때, 요청에 필요한 URI를 응답에 포함시켜 반환하는
+    compile('org.springframework.boot:spring-boot-starter-hateoas')
+    compile('com.h2database:h2')
+    compile('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
