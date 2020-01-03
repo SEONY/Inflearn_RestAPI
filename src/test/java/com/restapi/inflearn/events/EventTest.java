@@ -11,12 +11,14 @@ class EventTest {
      */
     @Test
     public void builder() {
+
         Event event = Event.builder()
                 .name("Infleaarn Spring REST API")
                 .description("REST API development with Spring")
                 .build();
 
         assertThat(event).isNotNull();
+
     }
 
     /*
@@ -25,6 +27,7 @@ class EventTest {
      */
     @Test
     public void javaBean() {
+
         // Given
         String name = "Event";
         String description = "Spring";
